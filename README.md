@@ -1,0 +1,1 @@
+# azure-python-webapp-sqldb-managed-identity
