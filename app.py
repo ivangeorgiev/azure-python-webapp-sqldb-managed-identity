@@ -30,6 +30,13 @@ def connect_db(server=None, database=None, driver=None):
     
     return conn
 
+def resultset_to_dictlist(resultset):
+    result = []
+    for row in resultset:
+        entry = { f[1][0]:row[f[0]] for f in enumerate(row.cursor_description) }
+        result.append(entry)
+    return result
+
 
 @app.route('/')
 def hello_world():
@@ -37,5 +44,5 @@ def hello_world():
     result = {}
     with db.execute("SELECT @@version") as resultset:
         # result['columns'] = row.cursor_description
-        result['rows']  = [list(row) for row in resultset]
+        result['rows']  = resultset_to_dictlist(resultset)
     return jsonify(result)
