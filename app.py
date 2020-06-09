@@ -43,7 +43,6 @@ def hello_world():
     db = connect_db()
     result = {}
     with db.execute("SELECT @@version") as resultset:
-        result['columns'] = row.cursor_description
         result['rows']  = resultset_to_dictlist(resultset)
     return jsonify(result)
 
@@ -52,7 +51,6 @@ def get_tables():
     db = connect_db()
     result = {}
     with db.cursor().tables() as resultset:
-        result['columns'] = row.cursor_description
         result['rows']  = resultset_to_dictlist(resultset)
     return jsonify(result)
 
